@@ -9,16 +9,16 @@ import 'dart:convert';
 class SvcAutenticacion {
 
 
-  static Future<Map<String, String>> loginUsuario(Usuario usuario) async {
+  static Future<Map<String, String>> getPublicaciones({String? sIdPublicacion}) async {
     Map<String, String> mRespuesta = {"sCodigo": "0", "sMensaje": ""};
     var url =
-        Uri.http("${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/login');
+        Uri.http("${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/users/verPublicacion');
 
     print(url);
     try {
-      print(Usuario.serializacion(usuario));
       var response =
-          await http.post(url, body: await Usuario.serializacion(usuario));
+          await http.get(url,
+           headers: {'authorization': SharedPreferencesClass.readData('token', "String").toString() });
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
       Map<String, dynamic> data = json.decode(response.body);

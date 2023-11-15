@@ -29,7 +29,7 @@ class Inicio extends StatelessWidget {
                   ElevatedButton.icon(
                     icon: Icon(MdiIcons.account),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('rtrRegistro');
+                      Navigator.of(context).pushNamed('rtrLogin');
                     },
                     label: const Text("Inciar sesión"),
                   ),
