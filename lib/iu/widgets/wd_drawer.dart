@@ -19,25 +19,29 @@ class DrawerMain extends StatelessWidget {
           ListTile(
             title: const Text("Videojuegos"),
             leading: Icon(Icons.videogame_asset_rounded),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed('rtrVideojuegos');
+            },
           ),
           ListTile(
             title: const Text("Eventos"),
             leading: Icon(Icons.event),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed('rtrEventos');
+            },
           ),
           ListTile(
             title: const Text("Acerca de"),
             leading: const Icon(Icons.business_sharp),
             onTap: () {
-              // Navigator.of(context).pushNamed('rtrPerfilUser');
+              Navigator.of(context).pushNamed('rtrAcercaDe');
             },
           ),
           ListTile(
             title: const Text("Terminos y condiciones"),
             leading: const Icon(Icons.balance),
             onTap: () {
-              // Navigator.of(context).pushNamed('rtrPerfilUser');
+              Navigator.of(context).pushNamed('rtrTermCondiciones');
             },
           )
         ],

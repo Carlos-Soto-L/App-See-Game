@@ -2,14 +2,14 @@ import 'package:app_see_game/iu/widgets/wd_appBarMain.dart';
 import 'package:app_see_game/iu/widgets/wd_drawer.dart';
 import 'package:flutter/material.dart';
 
-class Eventos extends StatefulWidget {
-  const Eventos({super.key});
+class Acerca extends StatefulWidget {
+  const Acerca({super.key});
 
   @override
-  State<Eventos> createState() => _EventosState();
+  State<Acerca> createState() => _AcercaState();
 }
 
-class _EventosState extends State<Eventos> {
+class _AcercaState extends State<Acerca> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
