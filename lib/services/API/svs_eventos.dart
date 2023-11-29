@@ -6,13 +6,13 @@ import 'package:app_see_game/class/SharedPreferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
-class SvcVideojuegos {
-  static Future<List<Map<String, dynamic>>> getVideojuegos() async {
+class SvcEventos {
+  static Future<List<Map<String, dynamic>>> getEventos() async {
     String sToken = await SharedPreferencesClass.readData('token', "String");
     print(sToken);
     List<Map<String, dynamic>> aRespuesta = [];
     var url = Uri.http(
-        "${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/api/videogames');
+        "${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/api/eventos');
 
     print(url);
     try {
