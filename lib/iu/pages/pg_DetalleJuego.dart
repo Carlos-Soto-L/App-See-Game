@@ -28,6 +28,8 @@ class _DetalleJuegoState extends State<DetalleJuego> {
   String historia = "";
   String resumen = "";
 
+    String tituloVideo = "";
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -61,6 +63,7 @@ class _DetalleJuegoState extends State<DetalleJuego> {
         for (var video in videos) {
           String urlYoutube = video['urlYoutube'];
           String? videoId = Utils.extractVideoId(urlYoutube);
+           tituloVideo = video['name'] ?? "video";
           print('El ID del video ${video['name']} es: $videoId');
           if (videoId != null) {
             videoControllers.add(videoId);
@@ -156,23 +159,55 @@ class _DetalleJuegoState extends State<DetalleJuego> {
                                   expandedIcon: const Icon(Icons.minimize)),
                             if(!waiting && resumen.isEmpty && historia.isEmpty)
                             Text("Sin información."),
-                            if (videoControllers.isNotEmpty)
-                              GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                child: YoutubePlayer(
-                                  controller:
-                                      YoutubePlayerController.fromVideoId(
-                                    videoId: videoControllers[0],
-                                    autoPlay: false,
-                                    params: const YoutubePlayerParams(
-                                      showControls: true,
-                                      showFullscreenButton: false,
-                                    ),
-                                  ),
-                                  aspectRatio:
-                                      screenWidth > 500 ? 16 / 9 : 4 / 3,
-                                ),
-                              ),
+                            if (videoControllers.isNotEmpty && !waiting)
+                              ElevatedButton(
+                                  onPressed: () {
+                                    showDialog<void>(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // user must tap button!
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              tituloVideo,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            content: Container(
+                                              // Establece un tamaño fijo para el contenido del video
+                                              width:
+                                                  screenWidth, // Ajusta este valor según tus necesidades
+                                              // height:
+                                              //     1000, // Ajusta este valor según tus necesidades
+                                              child: YoutubePlayer(
+                                                controller:
+                                                    YoutubePlayerController
+                                                        .fromVideoId(
+                                                  videoId: videoControllers[0],
+                                                  autoPlay: false,
+                                                  params:
+                                                      const YoutubePlayerParams(
+                                                    showControls: true,
+                                                    showFullscreenButton: true,
+                                                  ),
+                                                ),
+                                                aspectRatio: 16 /
+                                                    9, // Ajusta este valor según tus necesidades
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cerrar'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  child: Text("Mostrar video")),
                             if (!waiting)
                               const Column(
                                 children: [

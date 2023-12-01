@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 import 'package:getwidget/components/carousel/gf_carousel.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class DetalleEvento extends StatefulWidget {
@@ -25,6 +26,8 @@ class _DetalleEventoState extends State<DetalleEvento> {
   List<String> videoControllers = [];
 
   String description = "";
+
+  String tituloVideo = "";
 
   @override
   void didChangeDependencies() {
@@ -59,6 +62,7 @@ class _DetalleEventoState extends State<DetalleEvento> {
         for (var video in videos) {
           String urlYoutube = video['urlYoutube'];
           String? videoId = Utils.extractVideoId(urlYoutube);
+          tituloVideo = video['name'] ?? "video";
           print('El ID del video ${video['name']} es: $videoId');
           if (videoId != null) {
             videoControllers.add(videoId);
@@ -141,27 +145,59 @@ class _DetalleEventoState extends State<DetalleEvento> {
                                   showAccordion: true,
                                   collapsedIcon: const Icon(Icons.add),
                                   expandedIcon: const Icon(Icons.minimize)),
-                            if (videoControllers.isNotEmpty)
-                              GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                child: YoutubePlayer(
-                                  controller:
-                                      YoutubePlayerController.fromVideoId(
-                                    videoId: videoControllers[0],
-                                    autoPlay: false,
-                                    params: const YoutubePlayerParams(
-                                      showControls: true,
-                                      showFullscreenButton: false,
-                                    ),
-                                  ),
-                                  aspectRatio:
-                                      screenWidth > 500 ? 16 / 9 : 4 / 3,
-                                ),
-                              ),
                             if (!waiting &&
                                 videoControllers.isEmpty &&
                                 description.isEmpty)
                               Text("Sin información."),
+                            if (videoControllers.isNotEmpty && !waiting)
+                              ElevatedButton(
+                                  onPressed: () {
+                                    showDialog<void>(
+                                        context: context,
+                                        barrierDismissible:
+                                            false, // user must tap button!
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              tituloVideo,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            content: Container(
+                                              // Establece un tamaño fijo para el contenido del video
+                                              width:
+                                                  screenWidth, // Ajusta este valor según tus necesidades
+                                              // height:
+                                              //     1000, // Ajusta este valor según tus necesidades
+                                              child: YoutubePlayer(
+                                                controller:
+                                                    YoutubePlayerController
+                                                        .fromVideoId(
+                                                  videoId: videoControllers[0],
+                                                  autoPlay: false,
+                                                  params:
+                                                      const YoutubePlayerParams(
+                                                    showControls: true,
+                                                    showFullscreenButton: true,
+                                                  ),
+                                                ),
+                                                aspectRatio: 16 /
+                                                    9, // Ajusta este valor según tus necesidades
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('Cerrar'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  child: Text("Mostrar video")),
                             if (!waiting)
                               const Column(
                                 children: [

@@ -58,7 +58,6 @@ class SvcEventos {
       if (response.statusCode == 200) {
         // Parsea la respuesta JSON a una lista de dinámicos
         List<dynamic> data = json.decode(response.body);
-        print(data);
 
         // Mapea la lista de dinámicos a una lista de mapas
         aRespuesta = data.map((item) => item as Map<String, dynamic>).toList();
