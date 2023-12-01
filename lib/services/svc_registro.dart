@@ -11,7 +11,7 @@ class SvcRegistro {
   static Future<Map<String, String>> registrarUsuario(Usuario usuario) async {
     Map<String, String> mRespuesta = {"sCodigo": "0", "sMensaje": ""};
     var url =
-        Uri.http("${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/registro');
+        Uri.https("${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/registro');
 
     print(url);
     try {

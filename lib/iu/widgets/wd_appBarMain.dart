@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
 class AppBarMain extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarMain({super.key});
+  final int? iControl;
+
+  const AppBarMain({super.key, this.iControl});
+
+// 2 - eventos api
+// 3 - publicaciones en general
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -14,6 +19,14 @@ class AppBarMain extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return GFAppBar(
       searchBar: true,
+      onSubmitted: (String value) {
+        // 1- videojuegos api
+        if (iControl == 1) {
+          Navigator.of(context).pushNamed("rtrVideojuegos", arguments: value);
+        }else if(iControl == 2){
+          Navigator.of(context).pushNamed("rtrEventos", arguments: value);
+        }
+      },
       title: const Text("SEE GAME"),
       actions: <Widget>[
         GFIconButton(

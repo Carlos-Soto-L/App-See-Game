@@ -1,7 +1,6 @@
 // import 'package:http/http.dart' as http;
 
 import 'package:app_see_game/class/SharedPreferences.dart';
-import 'package:app_see_game/models/mdl_usuario.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,7 +11,7 @@ class SvcAutenticacion {
   static Future<Map<String, String>> getPublicaciones({String? sIdPublicacion}) async {
     Map<String, String> mRespuesta = {"sCodigo": "0", "sMensaje": ""};
     var url =
-        Uri.http("${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/users/verPublicacion');
+        Uri.https("${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/users/verPublicacion');
 
     print(url);
     try {

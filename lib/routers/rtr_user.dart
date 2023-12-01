@@ -1,5 +1,7 @@
 import 'package:app_see_game/class/SharedPreferences.dart';
+import 'package:app_see_game/iu/pages/pgDetalleEvento.dart';
 import 'package:app_see_game/iu/pages/pg_Acerca.dart';
+import 'package:app_see_game/iu/pages/pg_DetalleJuego.dart';
 import 'package:app_see_game/iu/pages/pg_DetallePublicacion.dart';
 import 'package:app_see_game/iu/pages/pg_Eventos.dart';
 import 'package:app_see_game/iu/pages/pg_PerfilUser.dart';
@@ -54,8 +56,14 @@ class UserRouters {
       'rtrVideojuegos': (contexto) {
         return comprobarSesion(Videojuegos(), Inicio());
       },
+      'rtrDetallesjuego': (contexto) {
+        return comprobarSesion(DetalleJuego(), Inicio());
+      },
       'rtrEventos': (contexto) {
         return comprobarSesion(Eventos(), Inicio());
+      },
+      'rtrDetallesevento': (contexto) {
+        return comprobarSesion(DetalleEvento(), Inicio());
       },
       'rtrTermCondiciones': (contexto) {
         return comprobarSesion(TermCondiciones(), Inicio());

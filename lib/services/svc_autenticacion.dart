@@ -12,7 +12,9 @@ class SvcAutenticacion {
   static Future<Map<String, String>> loginUsuario(Usuario usuario) async {
     Map<String, String> mRespuesta = {"sCodigo": "0", "sMensaje": ""};
     var url =
-        Uri.http("${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/login');
+        Uri.https(
+          "${dotenv.env['HOST']!}:${dotenv.env['PORT']!}", '/login'
+        );
 
     print(url);
     try {

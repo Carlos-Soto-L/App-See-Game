@@ -16,6 +16,23 @@ class _EventosState extends State<Eventos> {
 bool waiting = true;
   List<Map<String, dynamic>> videojuegos = [];
 
+    // Inicializa sNombre con un valor predeterminado
+  late String sNombre = "";
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Accede a los argumentos de la ruta en didChangeDependencies
+    sNombre = (ModalRoute.of(context)?.settings.arguments as String?) ?? '';
+
+    if (sNombre.isEmpty) {
+      _loadData();
+      
+    } else {
+      _loadDataSearch(sNombre);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -38,6 +55,21 @@ bool waiting = true;
     });
   }
 
+    Future<void> _loadDataSearch(String sNombre) async {
+    setState(() {
+      waiting = true;
+    });
+
+    // Llama a tu función asíncrona aquí
+    List<Map<String, dynamic>> aRespuesta =
+        await SvcEventos.getEventosSearch(sNombre);
+
+    setState(() {
+      videojuegos = aRespuesta;
+      waiting = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
         // Obtén el ancho total de la pantalla
@@ -49,7 +81,7 @@ bool waiting = true;
     maxWidth = screenWidth > 500 ? maxWidth : screenWidth;
 
     return Scaffold(
-        appBar: AppBarMain(),
+        appBar: AppBarMain(iControl: 2),
         drawer: DrawerMain(),
         body: Center(
           child: Container(
@@ -68,14 +100,13 @@ bool waiting = true;
                         titleText: videojuegos[index]['name'],
                         icon: const Icon(Icons.calendar_month),
                         onTap: () {
-                          print('ID: ${videojuegos[index]['id']}');
+                          Navigator.of(context).pushNamed("rtrDetallesevento", arguments: videojuegos[index]['id'].toString());
                         },
                       );
                     },
                   ),
                 if (waiting)
                   Container(
-                    color: Colors.black.withOpacity(0.2),
                     child: Center(
                       child: LoadingAnimationWidget.staggeredDotsWave(
                         color: Theme.of(context).primaryColor,

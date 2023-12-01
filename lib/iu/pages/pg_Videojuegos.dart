@@ -16,11 +16,27 @@ class _VideojuegosState extends State<Videojuegos> {
   bool waiting = true;
   List<Map<String, dynamic>> videojuegos = [];
 
+  // Inicializa sNombre con un valor predeterminado
+  late String sNombre = "";
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Accede a los argumentos de la ruta en didChangeDependencies
+    sNombre = (ModalRoute.of(context)?.settings.arguments as String?) ?? '';
+
+    if (sNombre.isEmpty) {
+      _loadData();
+      
+    } else {
+      _loadDataSearch(sNombre);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadData();
   }
 
   Future<void> _loadData() async {
@@ -38,9 +54,24 @@ class _VideojuegosState extends State<Videojuegos> {
     });
   }
 
+  Future<void> _loadDataSearch(String sNombre) async {
+    setState(() {
+      waiting = true;
+    });
+
+    // Llama a tu función asíncrona aquí
+    List<Map<String, dynamic>> aRespuesta =
+        await SvcVideojuegos.getVideojuegosSearch(sNombre);
+
+    setState(() {
+      videojuegos = aRespuesta;
+      waiting = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-        // Obtén el ancho total de la pantalla
+    // Obtén el ancho total de la pantalla
     double screenWidth = MediaQuery.of(context).size.width;
 
     // Establece el ancho máximo como un porcentaje (80% en este caso)
@@ -49,8 +80,8 @@ class _VideojuegosState extends State<Videojuegos> {
     maxWidth = screenWidth > 500 ? maxWidth : screenWidth;
 
     return Scaffold(
-        appBar: AppBarMain(),
-        drawer: DrawerMain(),
+        appBar: const AppBarMain(iControl: 1),
+        drawer: const DrawerMain(),
         body: Center(
           child: Container(
             constraints: BoxConstraints(maxWidth: maxWidth),
@@ -60,7 +91,6 @@ class _VideojuegosState extends State<Videojuegos> {
                   ListView.builder(
                     itemCount: videojuegos.length,
                     itemBuilder: (context, index) {
-                      print(videojuegos.length);
                       return GFListTile(
                         color: Theme.of(context).cardColor,
                         hoverColor: Theme.of(context).hoverColor,
@@ -68,14 +98,13 @@ class _VideojuegosState extends State<Videojuegos> {
                         titleText: videojuegos[index]['name'],
                         icon: const Icon(Icons.videogame_asset_rounded),
                         onTap: () {
-                          print('ID: ${videojuegos[index]['id']}');
+                          Navigator.of(context).pushNamed("rtrDetallesjuego", arguments: videojuegos[index]['id'].toString());
                         },
                       );
                     },
                   ),
                 if (waiting)
                   Container(
-                    color: Colors.black.withOpacity(0.2),
                     child: Center(
                       child: LoadingAnimationWidget.staggeredDotsWave(
                         color: Theme.of(context).primaryColor,
