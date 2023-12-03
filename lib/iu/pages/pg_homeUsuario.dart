@@ -10,9 +10,6 @@ class HomeUsuario extends StatefulWidget {
 }
 
 class _HomeUsuarioState extends State<HomeUsuario> {
-  
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -21,7 +18,6 @@ class _HomeUsuarioState extends State<HomeUsuario> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: const AppBarMain(),
       drawer: const DrawerMain(),
@@ -57,7 +53,8 @@ class _HomeUsuarioState extends State<HomeUsuario> {
                         child: TextButton(
                           child: const Text('Comentarios'),
                           onPressed: () {
-                            Navigator.of(context).pushNamed('rtrDetallePublicacion');
+                            Navigator.of(context)
+                                .pushNamed('rtrDetallePublicacion');
                           },
                         ),
                       ),
@@ -69,8 +66,16 @@ class _HomeUsuarioState extends State<HomeUsuario> {
           ),
         ),
       ),
+      // Boton flotante
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text("Nueva publicación"),
+        onPressed: () {
+          Navigator.of(context).pushNamed('rtrFormPublicacion');
+        },
+        icon: Icon(Icons.public),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // Fin botton flotante
     );
   }
-
-  
 }

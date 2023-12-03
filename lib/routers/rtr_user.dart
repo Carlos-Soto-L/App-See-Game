@@ -7,6 +7,7 @@ import 'package:app_see_game/iu/pages/pg_Eventos.dart';
 import 'package:app_see_game/iu/pages/pg_PerfilUser.dart';
 import 'package:app_see_game/iu/pages/pg_TermCondiciones.dart';
 import 'package:app_see_game/iu/pages/pg_Videojuegos.dart';
+import 'package:app_see_game/iu/pages/pg_formPublicacion.dart';
 import 'package:app_see_game/iu/pages/pg_homeUsuario.dart';
 import 'package:app_see_game/iu/pages/pg_inicio.dart';
 import 'package:app_see_game/iu/pages/pg_login.dart';
@@ -52,6 +53,9 @@ class UserRouters {
       },
       'rtrDetallePublicacion': (contexto) {
         return comprobarSesion(DetallePublicacion(), Inicio());
+      },
+      'rtrFormPublicacion': (contexto) {
+        return comprobarSesion(FormPublicacion(), Inicio());
       },
       'rtrVideojuegos': (contexto) {
         return comprobarSesion(Videojuegos(), Inicio());

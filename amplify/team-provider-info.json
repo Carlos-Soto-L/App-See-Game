@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-appseegame-dev-221709-authRole",
+      "UnauthRoleArn": "arn:aws:iam::544285405790:role/amplify-appseegame-dev-221709-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::544285405790:role/amplify-appseegame-dev-221709-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-appseegame-dev-221709-deployment",
+      "UnauthRoleName": "amplify-appseegame-dev-221709-unauthRole",
+      "StackName": "amplify-appseegame-dev-221709",
+      "StackId": "arn:aws:cloudformation:us-east-2:544285405790:stack/amplify-appseegame-dev-221709/d41cbd10-9192-11ee-93e1-0270e0222947",
+      "AmplifyAppId": "d34c13ud323jvy"
+    },
+    "categories": {
+      "auth": {
+        "appseegamed07e787a": {}
+      },
+      "storage": {
+        "s3fc899aef": {}
+      }
+    }
+  }
+}
